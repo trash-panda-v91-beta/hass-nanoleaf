@@ -1,0 +1,33 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Device is already configured",
+      "cannot_connect": "Failed to connect",
+      "invalid_token": "Invalid access token",
+      "reauth_successful": "Re-authentication was successful",
+      "unknown": "Unexpected error"
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "not_allowing_new_tokens": "Nanoleaf is not allowing new tokens, follow the instructions above.",
+      "unknown": "Unexpected error"
+    },
+    "flow_title": "{name}",
+    "step": {
+      "link": {
+        "description": "Open the device settings in the Nanoleaf app and tap **Connect to API**, then select **Submit** within 30 seconds. On devices without app support: hold the power button for 5 seconds until the LEDs flash instead.",
+        "title": "Link Nanoleaf"
+      },
+      "user": {
+        "data": {
+          "host": "Host",
+          "token": "Token (optional)"
+        },
+        "data_description": {
+          "host": "The hostname or IP address of your Nanoleaf device.",
+          "token": "An existing API token. Leave empty to mint a new one in the pairing window."
+        }
+      }
+    }
+  }
+}

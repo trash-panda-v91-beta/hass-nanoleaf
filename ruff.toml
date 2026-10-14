@@ -1,0 +1,8 @@
+line-length = 120
+src = ["custom_components"]
+
+[format]
+docstring-code-format = true
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP"]

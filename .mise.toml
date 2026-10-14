@@ -1,0 +1,36 @@
+[env]
+_.fnox-env = { tools = true }
+_.python.venv = { path = ".venv", create = true }
+
+[plugins]
+fnox-env = "https://github.com/jdx/mise-env-fnox"
+
+[tools]
+actionlint = "1.7.12"
+fnox = "1.35.3"
+hk = "1.58.1"
+pkl = "0.32.1"
+ruff = "0.16.8"
+rumdl = "0.2.77"
+shellcheck = "0.11.0"
+tombi = "1.5.5"
+ty = "0.0.84"
+uv = "0.12.18"
+yamlfmt = "0.21.0"
+"pipx:yamllint" = "1.38.0"
+
+[tasks.check]
+description = "Run all checks"
+run = "hk check --all"
+
+[tasks.fix]
+description = "Fix all issues"
+run = "hk fix --all"
+
+[tasks.scenes]
+description = "Install bundled scenes onto a strip: mise run scenes -- bar|kir"
+run = "uv run python scripts/install_scenes.py"
+
+[tasks.test]
+description = "Run unit and integration tests"
+run = "uv run pytest --cov"

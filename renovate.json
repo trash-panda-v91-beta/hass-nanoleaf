@@ -1,0 +1,16 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>trash-panda-v91-beta/renovate-config"],
+  "packageRules": [
+    {
+      "description": "Group GitHub Actions updates into one PR",
+      "groupName": "github-actions",
+      "matchManagers": ["github-actions"]
+    },
+    {
+      "description": "Group Python dependency updates into one PR",
+      "groupName": "python",
+      "matchManagers": ["pep621", "pip_requirements", "python"]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+[project]
+name = "hass-nanoleaf"
+version = "0.1.0"
+description = "Home Assistant integration for Nanoleaf lights, with bundled scenes"
+readme = "README.md"
+requires-python = ">=3.14.2"
+license = "MIT"
+authors = [{ name = "trash-panda-v91-beta", email = "42897550+trash-panda-v91-beta@users.noreply.github.com" }]
+keywords = ["hacs", "home-assistant", "matter", "nanoleaf"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+  "aionanoleaf2>=1.2.0",
+]
+
+[project.urls]
+Issues = "https://github.com/trash-panda-v91-beta/hass-nanoleaf/issues"
+Repository = "https://github.com/trash-panda-v91-beta/hass-nanoleaf"
+
+[dependency-groups]
+dev = [{ include-group = "test" }]
+test = [
+  "homeassistant>=2026.10.0",
+  "pytest>=9.1.1",
+  "pytest-asyncio>=1.4.0",
+  "pytest-cov>=7.1.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
