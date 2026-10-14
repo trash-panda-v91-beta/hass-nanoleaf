@@ -1,0 +1,10 @@
+---
+area/ci:
+  - changed-files:
+      - any-glob-to-any-file: ".github/**/*"
+area/python:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "custom_components/**/*"
+          - "scripts/**/*"
+          - "tests/**/*"
