@@ -18,3 +18,5 @@ build/
 dist/
 lib64/
 venv/
+.fnox.toml
+.fnox.toml
