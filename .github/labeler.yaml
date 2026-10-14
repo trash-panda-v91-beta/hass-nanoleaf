@@ -8,8 +8,3 @@ area/python:
           - "custom_components/**/*"
           - "scripts/**/*"
           - "tests/**/*"
-area/docs:
-  - changed-files:
-      - any-glob-to-any-file:
-          - "README.md"
-          - "AGENTS.md"
