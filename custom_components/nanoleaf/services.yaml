@@ -1,0 +1,97 @@
+---
+add_scene:
+  name: Add scene
+  description: >-
+    Saves a new color-flow scene on the strip. It appears in the effect list
+    immediately and keeps working from any controller.
+  fields:
+    entity_id:
+      name: Light
+      description: The strip to add the scene to
+      required: true
+      example: light.nanoleaf_iml_a2d
+      selector:
+        entity:
+          integration: nanoleaf
+          domain: light
+    name:
+      name: Scene name
+      description: Must be unique on the device
+      required: true
+      example: Northern Glow
+      selector:
+        text:
+    colors:
+      name: Palette
+      description: >-
+        Hex colors without '#', 2 or more. Two colors become a smooth
+        gradient automatically.
+      required: true
+      example:
+        - "0D1B2A"
+        - "415A77"
+        - "FFFFFF"
+      selector:
+        object:
+    trans_time:
+      name: Speed
+      description: Higher value = slower color transitions
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 500
+    direction:
+      name: Direction
+      selector:
+        select:
+          options:
+            - right
+            - left
+    motion:
+      name: Motion
+      description: Movement style. Each is the engine behind a built-in scene family.
+      selector:
+        select:
+          options:
+            - flow
+            - wave
+            - glow
+            - scatter
+            - pulse
+            - ufo
+            - twinkle
+            - flash
+    n_colors_per_frame:
+      name: Colors at once
+      description: How many palette colors are visible at the same time (2 = calm, 7 = busy)
+      default: 3
+      selector:
+        number:
+          min: 1
+          max: 7
+    block_size:
+      name: Block size
+      description: Size of color blocks for block-based motions
+      selector:
+        number:
+          min: 1
+          max: 10
+    delay_time:
+      name: Delay
+      description: Pause between color changes
+      selector:
+        number:
+          min: 0
+          max: 100
+    main_color_prob:
+      name: Main color probability
+      description: 0-100, how often the first palette color is used
+      selector:
+        number:
+          min: 0
+          max: 100
+    background:
+      name: Enable background color
+      selector:
+        boolean:
