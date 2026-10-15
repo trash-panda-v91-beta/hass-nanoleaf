@@ -40,7 +40,7 @@ add_scene:
       selector:
         number:
           min: 5
-          max: 100
+          max: 500
     direction:
       name: Direction
       selector:
@@ -48,3 +48,41 @@ add_scene:
           options:
             - right
             - left
+    motion:
+      name: Motion
+      description: Name of an existing effect whose movement style to reuse (e.g. Ocean Waves). Leave empty for the standard flow.
+      selector:
+        text:
+    n_colors_per_frame:
+      name: Colors at once
+      description: How many palette colors are visible at the same time (2 = calm, 7 = busy)
+      default: 3
+      selector:
+        number:
+          min: 1
+          max: 7
+    block_size:
+      name: Block size
+      description: Size of color blocks for block-based motions
+      selector:
+        number:
+          min: 1
+          max: 10
+    delay_time:
+      name: Delay
+      description: Pause between color changes
+      selector:
+        number:
+          min: 0
+          max: 100
+    main_color_prob:
+      name: Main color probability
+      description: 0-100, how often the first palette color is used
+      selector:
+        number:
+          min: 0
+          max: 100
+    background:
+      name: Enable background color
+      selector:
+        boolean:

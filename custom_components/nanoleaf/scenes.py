@@ -31,20 +31,26 @@ def build_scene(
     palette: list[str],
     trans_time: int = 30,
     direction: str = "right",
+    plugin_uuid: str = FLOW_MOTION_UUID,
+    n_colors: int = 3,
+    extra_options: dict[str, Any] | None = None,
 ) -> Scene:
     """Build a looping color-flow scene over a hex palette."""
-    return {
+    scene: Scene = {
         "animType": "plugin",
         "pluginType": "color",
-        "pluginUuid": FLOW_MOTION_UUID,
+        "pluginUuid": plugin_uuid,
         "hexPalette": palette,
         "pluginOptions": [
             {"name": "linDirection", "value": direction},
             {"name": "loop", "value": True},
-            {"name": "nColorsPerFrame", "value": 3},
+            {"name": "nColorsPerFrame", "value": n_colors},
             {"name": "transTime", "value": trans_time},
         ],
     }
+    if extra_options:
+        scene["pluginOptions"] += [{"name": k, "value": v} for k, v in extra_options.items()]
+    return scene
 
 
 def expand_gradient(palette: list[str], steps: int = 6) -> list[str]:
