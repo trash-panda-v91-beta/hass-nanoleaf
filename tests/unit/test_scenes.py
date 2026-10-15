@@ -3,7 +3,9 @@
 import re
 
 from custom_components.nanoleaf.scenes import (
+    MOTION_NAMES,
     SCENES,
+    Motion,
     build_scene,
     expand_gradient,
     install_payload,
@@ -50,3 +52,19 @@ def test_expand_gradient_fills_short_palettes() -> None:
     assert grad[0] == "000000"
     assert grad[-1] == "FFFFFF"
     assert all(HEX_COLOR.match(c) for c in grad)
+
+
+def test_motion_enum_covers_the_built_in_styles() -> None:
+    """Eight movement styles, each keyed to a device motion uuid."""
+    assert MOTION_NAMES == [
+        "flow",
+        "wave",
+        "glow",
+        "scatter",
+        "pulse",
+        "ufo",
+        "twinkle",
+        "flash",
+    ]
+    for motion in Motion:
+        assert len(str(motion)) == 36

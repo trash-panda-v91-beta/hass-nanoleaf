@@ -8,6 +8,7 @@ without this integration.
 
 from __future__ import annotations
 
+from enum import StrEnum
 from typing import Any, TypedDict
 
 from aionanoleaf2 import Nanoleaf
@@ -23,15 +24,27 @@ class Scene(TypedDict):
     pluginOptions: list[dict[str, Any]]
 
 
-# Motion UUID behind the built-in color-flow scenes (e.g. Northern Lights).
-FLOW_MOTION_UUID = "6970681a-20b5-4c5e-8813-bdaebc4ee4fa"
+class Motion(StrEnum):
+    """Movement styles available on the strips (one per built-in scene family)."""
+
+    FLOW = "6970681a-20b5-4c5e-8813-bdaebc4ee4fa"  # Northern Lights drift
+    WAVE = "e2eb1818-07ac-495f-a10d-7c192d7df705"  # Ocean Waves
+    GLOW = "0794a6b3-f6cc-452d-a900-30081604b7ec"  # Cozy Glow
+    SCATTER = "db8ce916-88de-484f-bdbb-afd732053105"  # Radioactive
+    PULSE = "e8b69f65-df13-480b-a949-db1bbc9a1cde"  # Pump Up
+    UFO = "29929fc2-6905-41c0-a7d7-1582a8c11f17"  # UFO sweep
+    TWINKLE = "ba632d3e-9c2b-4413-a965-510c839b3f71"  # Starry Night
+    FLASH = "70b7c636-6bf8-491f-89c1-f4103508d642"  # Flash Light
+
+
+MOTION_NAMES = [m.name.lower() for m in Motion]
 
 
 def build_scene(
     palette: list[str],
     trans_time: int = 30,
     direction: str = "right",
-    plugin_uuid: str = FLOW_MOTION_UUID,
+    motion: Motion = Motion.FLOW,
     n_colors: int = 3,
     extra_options: dict[str, Any] | None = None,
 ) -> Scene:
@@ -39,7 +52,7 @@ def build_scene(
     scene: Scene = {
         "animType": "plugin",
         "pluginType": "color",
-        "pluginUuid": plugin_uuid,
+        "pluginUuid": str(motion),
         "hexPalette": palette,
         "pluginOptions": [
             {"name": "linDirection", "value": direction},

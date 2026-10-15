@@ -50,9 +50,18 @@ add_scene:
             - left
     motion:
       name: Motion
-      description: Name of an existing effect whose movement style to reuse (e.g. Ocean Waves). Leave empty for the standard flow.
+      description: Movement style. Each is the engine behind a built-in scene family.
       selector:
-        text:
+        select:
+          options:
+            - flow
+            - wave
+            - glow
+            - scatter
+            - pulse
+            - ufo
+            - twinkle
+            - flash
     n_colors_per_frame:
       name: Colors at once
       description: How many palette colors are visible at the same time (2 = calm, 7 = busy)

@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from homeassistant.const import ATTR_ENTITY_ID
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import ServiceValidationError
@@ -11,10 +9,8 @@ from homeassistant.helpers import entity_registry as er
 from probatio import Optional, Required, Schema
 
 from .const import DOMAIN
-from .scenes import FLOW_MOTION_UUID, build_scene, expand_gradient, install_scene
+from .scenes import Motion, build_scene, expand_gradient, install_scene
 
-# Extra motion options the service accepts, mapped to their OpenAPI
-# pluginOption names (camelCase, as the device expects them).
 EXTRA_OPTIONS = {
     "block_size": "blockSize",
     "delay_time": "delayTime",
@@ -39,19 +35,6 @@ ADD_SCENE_SCHEMA = Schema(
 )
 
 
-def _resolve_motion_uuid(nanoleaf: Any, motion: str) -> str:
-    """Find the motion uuid used by an existing effect on the device."""
-    # ponytail: requestAll goes through the library's private request hook,
-    # same trade-off as install_scene.
-    payload = nanoleaf._request("put", "effects", {"write": {"command": "requestAll"}})
-    for effect in payload.get("animations", []):
-        if effect.get("animName") == motion:
-            return effect["pluginUuid"]
-    raise ServiceValidationError(
-        f"No effect named '{motion}' on the device - motions are borrowed from existing effects"
-    )
-
-
 def async_setup_services(hass: HomeAssistant) -> None:
     """Register the Nanoleaf services."""
 
@@ -70,11 +53,13 @@ def async_setup_services(hass: HomeAssistant) -> None:
         if name in nanoleaf.effects_list:
             raise ServiceValidationError(f"A scene named '{name}' already exists on {config_entry.title}")
 
-        extra = {EXTRA_OPTIONS[key]: call.data[key] for key in EXTRA_OPTIONS if key in call.data}
+        try:
+            motion = Motion[call.data.get("motion", "flow").upper()]
+        except KeyError:
+            valid = ", ".join(m.name.lower() for m in Motion)
+            raise ServiceValidationError(f"Unknown motion '{call.data.get('motion')}'. Valid: {valid}") from None
 
-        plugin_uuid = FLOW_MOTION_UUID
-        if motion := call.data.get("motion"):
-            plugin_uuid = _resolve_motion_uuid(nanoleaf, motion)
+        extra = {EXTRA_OPTIONS[key]: call.data[key] for key in EXTRA_OPTIONS if key in call.data}
 
         palette = call.data["colors"]
         if len(palette) == 2:
@@ -87,7 +72,7 @@ def async_setup_services(hass: HomeAssistant) -> None:
                 palette,
                 call.data.get("trans_time", 30),
                 call.data.get("direction", "right"),
-                plugin_uuid=plugin_uuid,
+                motion=motion,
                 n_colors=call.data.get("n_colors_per_frame", 3),
                 extra_options=extra or None,
             ),
