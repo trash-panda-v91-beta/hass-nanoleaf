@@ -23,7 +23,17 @@ The token is stored in the config entry. Devices can stay in the Nanoleaf app or
 
 ## Scenes
 
-The bundled scenes appear in the effect list next to the device's own effects. Picking one for the first time saves it on the strip (via the API `add` command) and starts it. Add more in `custom_components/nanoleaf/scenes.py` - each is a palette and a speed over the standard color-flow motion.
+The bundled scenes appear in the effect list next to the device's own effects. Picking one for the first time saves it on the strip (via the API `add` command) and starts it. Add more presets in `custom_components/nanoleaf/scenes.py` - each is a palette and a speed over the standard color-flow motion.
+
+New scenes can also be created at runtime with the `nanoleaf.add_scene` service - no app needed. Give a light, a name, and a hex palette (2+ colors; two colors become a smooth gradient). The scene is saved on the strip and shows up in the effect list immediately:
+
+```yaml
+action: nanoleaf.add_scene
+data:
+  entity_id: light.nanoleaf_iml_a2d
+  name: Northern Glow
+  colors: ["0D1B2A", "415A77", "FFFFFF"]
+```
 
 ## Development
 
