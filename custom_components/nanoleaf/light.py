@@ -150,5 +150,5 @@ class NanoleafLight(NanoleafEntity, LightEntity):
     async def _async_select_effect(self, name: str) -> None:
         """Select an effect, installing a bundled scene on the device on first use."""
         if name in SCENES and name not in self._nanoleaf.effects_list:
-            await install_scene(self._nanoleaf, name)
+            await install_scene(self._nanoleaf, name, SCENES[name])
         await self._nanoleaf.set_effect(name)

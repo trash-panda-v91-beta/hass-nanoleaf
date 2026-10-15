@@ -9,10 +9,18 @@ from aionanoleaf2 import EffectsEvent, Nanoleaf, StateEvent
 from homeassistant.const import CONF_HOST, CONF_TOKEN, Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.typing import ConfigType
 
 from .coordinator import NanoleafConfigEntry, NanoleafCoordinator
+from .services import async_setup_services
 
 PLATFORMS = [Platform.BUTTON, Platform.LIGHT]
+
+
+async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+    """Set up the Nanoleaf services."""
+    async_setup_services(hass)
+    return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: NanoleafConfigEntry) -> bool:
