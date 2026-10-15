@@ -28,7 +28,7 @@ async def main(target: str) -> None:
         await nanoleaf.get_info()
         print(f"{nanoleaf.name} ({nanoleaf.model}, fw {nanoleaf.firmware_version})")
         for name in SCENES:
-            await install_scene(nanoleaf, name)
+            await install_scene(nanoleaf, name, SCENES[name])
             print(f"installed {name}")
 
 

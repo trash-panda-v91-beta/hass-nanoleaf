@@ -1,0 +1,50 @@
+---
+add_scene:
+  name: Add scene
+  description: >-
+    Saves a new color-flow scene on the strip. It appears in the effect list
+    immediately and keeps working from any controller.
+  fields:
+    entity_id:
+      name: Light
+      description: The strip to add the scene to
+      required: true
+      example: light.nanoleaf_iml_a2d
+      selector:
+        entity:
+          integration: nanoleaf
+          domain: light
+    name:
+      name: Scene name
+      description: Must be unique on the device
+      required: true
+      example: Northern Glow
+      selector:
+        text:
+    colors:
+      name: Palette
+      description: >-
+        Hex colors without '#', 2 or more. Two colors become a smooth
+        gradient automatically.
+      required: true
+      example:
+        - "0D1B2A"
+        - "415A77"
+        - "FFFFFF"
+      selector:
+        object:
+    trans_time:
+      name: Speed
+      description: Higher value = slower color transitions
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 100
+    direction:
+      name: Direction
+      selector:
+        select:
+          options:
+            - right
+            - left
