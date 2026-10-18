@@ -32,3 +32,9 @@ test = [
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.ty.rules]
+# HA entity subclasses override base-class properties with read-only properties
+# (the standard pattern in Home Assistant integrations). The rule flags every
+# such override, so it is off repo-wide.
+invalid-property-type-override = "ignore"
