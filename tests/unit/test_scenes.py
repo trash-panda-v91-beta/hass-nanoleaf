@@ -7,6 +7,7 @@ from custom_components.nanoleaf.scenes import (
     SCENES,
     Motion,
     build_scene,
+    delete_payload,
     expand_gradient,
     install_payload,
 )
@@ -68,3 +69,9 @@ def test_motion_enum_covers_the_built_in_styles() -> None:
     ]
     for motion in Motion:
         assert len(str(motion)) == 36
+
+
+def test_delete_payload_wraps_the_delete_command() -> None:
+    """The delete payload must be a valid OpenAPI effects delete command."""
+    write = delete_payload("Northern Glow")["write"]
+    assert write == {"command": "delete", "animName": "Northern Glow"}

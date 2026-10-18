@@ -37,6 +37,8 @@ data:
   trans_time: 45
 ```
 
+Scenes are removed with `nanoleaf.remove_scene` (same `entity_id` + `name`), no app needed.
+
 ## Development
 
 ```bash

@@ -95,10 +95,21 @@ def install_payload(name: str, scene: Scene) -> dict[str, Any]:
     return {"write": {"command": "add", "animName": name, **scene}}
 
 
+def delete_payload(name: str) -> dict[str, Any]:
+    """OpenAPI request body that removes a scene from the device."""
+    return {"write": {"command": "delete", "animName": name}}
+
+
 async def install_scene(nanoleaf: Nanoleaf, name: str, scene: Scene) -> None:
     """Save a scene on the strip and refresh the cached effect list."""
     # ponytail: aionanoleaf2 has no public "add effect" call, so we use its
     # generic request hook. Ceiling: breaks if upstream renames _request.
     # Upgrade path: switch to a public write method when one lands upstream.
     await nanoleaf._request("put", "effects", install_payload(name, scene))
+    await nanoleaf.get_info()
+
+
+async def delete_scene(nanoleaf: Nanoleaf, name: str) -> None:
+    """Remove a scene from the strip and refresh the cached effect list."""
+    await nanoleaf._request("put", "effects", delete_payload(name))
     await nanoleaf.get_info()
