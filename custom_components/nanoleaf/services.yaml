@@ -95,3 +95,24 @@ add_scene:
       name: Enable background color
       selector:
         boolean:
+
+remove_scene:
+  name: Remove scene
+  description: Deletes a scene from the strip's effect list.
+  fields:
+    entity_id:
+      name: Light
+      description: The strip to remove the scene from
+      required: true
+      example: light.nanoleaf_iml_a2d
+      selector:
+        entity:
+          integration: nanoleaf
+          domain: light
+    name:
+      name: Scene name
+      description: Name of the effect to delete
+      required: true
+      example: Northern Glow
+      selector:
+        text:

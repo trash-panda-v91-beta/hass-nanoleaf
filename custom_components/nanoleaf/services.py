@@ -9,7 +9,14 @@ from homeassistant.helpers import entity_registry as er
 from probatio import Optional, Required, Schema
 
 from .const import DOMAIN
-from .scenes import Motion, build_scene, expand_gradient, install_scene
+from .coordinator import NanoleafConfigEntry
+from .scenes import (
+    Motion,
+    build_scene,
+    delete_scene,
+    expand_gradient,
+    install_scene,
+)
 
 EXTRA_OPTIONS = {
     "block_size": "blockSize",
@@ -34,20 +41,31 @@ ADD_SCENE_SCHEMA = Schema(
     }
 )
 
+REMOVE_SCENE_SCHEMA = Schema(
+    {
+        Required(ATTR_ENTITY_ID): str,
+        Required("name"): str,
+    }
+)
+
+
+def _entry_for_entity(hass: HomeAssistant, entity_id: str) -> NanoleafConfigEntry:
+    """Resolve the Nanoleaf config entry behind a light entity."""
+    entry = er.async_get(hass).async_get(entity_id)
+    config_entry = (
+        hass.config_entries.async_get_entry(entry.config_entry_id) if entry and entry.config_entry_id else None
+    )
+    if config_entry is None or config_entry.domain != DOMAIN:
+        raise ServiceValidationError(f"{entity_id} is not a Nanoleaf light")
+    return config_entry
+
 
 def async_setup_services(hass: HomeAssistant) -> None:
     """Register the Nanoleaf services."""
 
     async def handle_add_scene(call: ServiceCall) -> None:
         """Install a scene on the targeted strip."""
-        entity_id = call.data[ATTR_ENTITY_ID]
-        entity_registry = er.async_get(hass)
-        entry = entity_registry.async_get(entity_id)
-        if entry is None or entry.config_entry_id is None:
-            raise ServiceValidationError(f"{entity_id} is not a Nanoleaf light")
-        config_entry = hass.config_entries.async_get_entry(entry.config_entry_id)
-        if config_entry is None or config_entry.domain != DOMAIN:
-            raise ServiceValidationError(f"{entity_id} is not a Nanoleaf light")
+        config_entry = _entry_for_entity(hass, call.data[ATTR_ENTITY_ID])
         name = call.data["name"]
         nanoleaf = config_entry.runtime_data.nanoleaf
         if name in nanoleaf.effects_list:
@@ -79,4 +97,15 @@ def async_setup_services(hass: HomeAssistant) -> None:
         )
         config_entry.runtime_data.async_set_updated_data(None)
 
+    async def handle_remove_scene(call: ServiceCall) -> None:
+        """Remove a scene from the targeted strip."""
+        config_entry = _entry_for_entity(hass, call.data[ATTR_ENTITY_ID])
+        name = call.data["name"]
+        nanoleaf = config_entry.runtime_data.nanoleaf
+        if name not in nanoleaf.effects_list:
+            raise ServiceValidationError(f"No scene named '{name}' on {config_entry.title}")
+        await delete_scene(nanoleaf, name)
+        config_entry.runtime_data.async_set_updated_data(None)
+
     hass.services.async_register(DOMAIN, "add_scene", handle_add_scene, schema=ADD_SCENE_SCHEMA)
+    hass.services.async_register(DOMAIN, "remove_scene", handle_remove_scene, schema=REMOVE_SCENE_SCHEMA)
