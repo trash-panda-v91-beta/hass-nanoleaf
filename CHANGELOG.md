@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.0](https://github.com/trash-panda-v91-beta/hass-nanoleaf/compare/v1.0.0...v1.1.0) (2026-10-18)
+
+
+### Features
+
+* **mise:** update mise tools ([#8](https://github.com/trash-panda-v91-beta/hass-nanoleaf/issues/8)) ([473e54e](https://github.com/trash-panda-v91-beta/hass-nanoleaf/commit/473e54e3dab7d59c9191d3e044aed41db36cf724))
+* nanoleaf.remove_scene service ([#11](https://github.com/trash-panda-v91-beta/hass-nanoleaf/issues/11)) ([f5b2e19](https://github.com/trash-panda-v91-beta/hass-nanoleaf/commit/f5b2e19b155ea125ba076a6b63df8138ca88fd83))
+
+
+### Continuous Integration
+
+* **github-action:** update github-actions ([#9](https://github.com/trash-panda-v91-beta/hass-nanoleaf/issues/9)) ([72ccb5a](https://github.com/trash-panda-v91-beta/hass-nanoleaf/commit/72ccb5ae11215988a169fd1a59b42ea9da27566d))
+
 ## [1.0.0](https://github.com/trash-panda-v91-beta/hass-nanoleaf/compare/v0.1.1...v1.0.0) (2026-10-15)
 
 
