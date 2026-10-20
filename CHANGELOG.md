@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/trash-panda-v91-beta/hass-nanoleaf/compare/v1.1.0...v1.1.1) (2026-10-20)
+
+
+### Continuous Integration
+
+* auto-approve routine dep bumps ([#14](https://github.com/trash-panda-v91-beta/hass-nanoleaf/issues/14)) ([70e75c6](https://github.com/trash-panda-v91-beta/hass-nanoleaf/commit/70e75c67978bc9b8d83300b0862817befee19341))
+
 ## [1.1.0](https://github.com/trash-panda-v91-beta/hass-nanoleaf/compare/v1.0.0...v1.1.0) (2026-10-18)
 
 
