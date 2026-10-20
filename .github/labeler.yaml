@@ -4,7 +4,7 @@ area/ci:
       - any-glob-to-any-file: ".github/**/*"
 area/python:
   - changed-files:
-      - any-glob-to-any-file:
-          - "custom_components/**/*"
-          - "scripts/**/*"
-          - "tests/**/*"
+      - any-glob-to-any-file: "src/**/*"
+area/docker:
+  - changed-files:
+      - any-glob-to-any-file: "Dockerfile"
