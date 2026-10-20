@@ -1,11 +1,11 @@
 {
 	"packages": {
 		".": {
-			"package-name": ".",
+			"package-name": "hass-nanoleaf",
 			"release-type": "python",
 			"extra-files": [
 				{ "type": "generic", "path": "README.md" },
-				{ "type": "toml", "path": "uv.lock", "jsonpath": "$.package[?(@.name.value=='.')].version" }
+				{ "type": "toml", "path": "uv.lock", "jsonpath": "$.package[?(@.name.value=='hass-nanoleaf')].version" }
 			]
 		}
 	},
